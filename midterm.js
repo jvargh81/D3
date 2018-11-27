@@ -82,7 +82,7 @@ async function main(){
                  .classed('city-name', true)
                  .attr("x", function(d,i){return xScale(100 * (i % 2))})
                  .attr("y",function(d,i){return yScale(10 * ( Math.floor(i/2) ))})	
-                 .text(function(d, i){ return d["year"] } )
+                 .text(function(d, i){return d["year"]})
                  .attr("font-size",12)
                  .on("click", function(d){
                  d3.select(".circles")
@@ -105,9 +105,8 @@ async function main(){
                     .text(this.value)
                   
                   d3.selectAll(".city-name")
-                    .data(dataset)
-                    
-
+                    .data(dataset)	
+                    .text(function(d, i){return d["year"]})                  
                  })
                  
 }
