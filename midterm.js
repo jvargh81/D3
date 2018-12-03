@@ -19,7 +19,13 @@ async function main(){
           }));
               
   /* Preparing the opening page. */   
-  var dataset = salary.filter(d=>d["name"]=="Cleveland Blues");
+  var dataset = salary.filter(d=>d["name"]=="Anaheim Angels");
+  var size = dataset.length;
+  console.log(size)
+ 
+  for(i=size;i<32;i++){
+    dataset.push(", ")
+  }
 
   svg.append("text")
     .attr("x",180)
@@ -69,11 +75,10 @@ async function main(){
       .attr("cx",60)
       .attr("cy",yValue)
       .attr("r",5)
-      .attr("fill","red")
+      .attr("fill","grey")
       .attr("stroke","black")
             
-  text = d3.select("svg")
-      .selectAll('text.years')
+  years = svg.selectAll('text.years')
       .data(dataset)
       .enter()
       .append("text")
@@ -83,25 +88,40 @@ async function main(){
       .attr("y",function(d,i){return yScale(10 * (Math.floor(i/2)))})
       .attr("font-size",12)
       .on("click", function(d){
-          d3.selectAll(".circles")
+            console.log(dataset)
+            d3.selectAll(".circles")
             .attr("cy",yScale(d["salaries"]))
+            .attr("fill","red")
+          
+          circle
+            .transition()
+            .ease(d3.easeBounce)
+            .delay(1000)
+            .duration(2000)
+            .attr("cy",yScale(0))
+            .attr("fill","grey")
             })
+            
+  
 
   d3.selectAll("option")
       /*Click Functionality */
       .on("click", function(){ 
         dataset = salary.filter(d=>d["name"]==this.value);
+        var size = dataset.length;
         console.log(dataset)
         d3.select(".title")
           .text(this.value)
         
-        d3.selectAll(".years")
+        for(i=size;i<32;i++){
+            dataset.push(", ")
+          }
+
+        years
             .data(dataset)
+            .text(function(d){return d["year"]})
             .attr("x", function(d,i){return xScale(100 * (i % 2))})
             .attr("y",function(d,i){return yScale(10 * (Math.floor(i/2)))})
-            .text(function(d){return d["year"]}) 
-            .exit()
-            .remove()
         })                
 }
 
