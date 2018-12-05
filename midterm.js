@@ -15,7 +15,7 @@ async function main(){
   salary = salary.map(d=>({
               name: d["name"],
               year: parseInt(d["yearID"]),
-              salaries: parseInt(d["Salaries"]) * 0.0000001
+              salaries: parseInt(d["Salaries"]) * 0.00000001
           }));
               
   /* Preparing the opening page. */   
