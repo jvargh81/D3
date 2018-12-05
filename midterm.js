@@ -15,7 +15,7 @@ async function main(){
   salary = salary.map(d=>({
               name: d["name"],
               year: parseInt(d["yearID"]),
-              salaries: parseInt(d["Salaries"]) * 0.00000001
+              salaries: parseInt(d["Salaries"]) * 0.0000001
           }));
               
   /* Preparing the opening page. */   
@@ -74,8 +74,8 @@ async function main(){
       .attr("class","circles")
       .attr("cx",60)
       .attr("cy",yValue)
-      .attr("r",5)
-      .attr("fill","grey")
+      .attr("r",4)
+      .attr("fill","transparent")
       .attr("stroke","black")
             
   years = svg.selectAll('text.years')
@@ -83,23 +83,22 @@ async function main(){
       .enter()
       .append("text")
       .classed('years', true)	
+      .attr("cursor","pointer")
       .text(function(d){return d.year})
       .attr("x", function(d,i){return xScale(100 * (i % 2))})
       .attr("y",function(d,i){return yScale(10 * (Math.floor(i/2)))})
       .attr("font-size",12)
       .on("click", function(d){
-            console.log(dataset)
-            d3.selectAll(".circles")
-            .attr("cy",yScale(d["salaries"]))
-            .attr("fill","red")
-          
           circle
             .transition()
-            .ease(d3.easeBounce)
             .delay(1000)
+            .ease(d3.easeBounce)
             .duration(2000)
-            .attr("cy",yScale(0))
-            .attr("fill","grey")
+            .attr("cy",yScale(d["salaries"]))
+            .attr("fill","red")
+            .transition()
+            .delay(1000)
+            .attr("fill","transparent")
             })
             
   
