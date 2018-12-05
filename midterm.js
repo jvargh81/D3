@@ -91,13 +91,13 @@ async function main(){
       .on("click", function(d){
           circle
             .transition()
-            .delay(1000)
+            .delay(100)
             .ease(d3.easeBounce)
             .duration(2000)
             .attr("cy",yScale(d["salaries"]))
             .attr("fill","red")
             .transition()
-            .delay(1000)
+            .delay(100)
             .attr("fill","transparent")
             })
             
