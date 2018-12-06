@@ -1,14 +1,16 @@
 async function main(){
+/* Predefining the SVG params.*/
   var w=500;
   var h=500;
   var padding=60;  
   var yValue=440;
 
+/* Creating the SVG canvas. */  
   var svg = d3.select("body")
               .append("svg")
               .attr("width",w)
               .attr("height",h)
- 
+/* Reading the data from csv. */ 
   var salary = await d3.csv("salaries.csv");
 
   /* Parsing integer strings to integer. */
@@ -22,11 +24,11 @@ async function main(){
   var dataset = salary.filter(d=>d["name"]=="Anaheim Angels");
   var size = dataset.length;
   console.log(size)
- 
+ /* Padding the extra length required to maintain the year length for other teams. */
   for(i=size;i<32;i++){
     dataset.push(", ")
   }
-
+/* Static text append. */
   svg.append("text")
     .attr("x",180)
     .attr("y",15)
@@ -41,6 +43,7 @@ async function main(){
     .attr("font-size",12)
     .attr("text-anchor","middle")
 
+/* Scaling used in the SVG. */ 
   var ymin = 0;
   var ymax = 240;
   var xmin = 0;
@@ -61,7 +64,8 @@ async function main(){
       .attr("class","yaxis")
       .attr("transform","translate("+padding+",0)")
       .call(yAxis);
-  
+
+/* Appending the Team title runtime by defining a class. */      
   svg.append("text")
       .data(dataset)
       .attr("class","title")
@@ -70,6 +74,7 @@ async function main(){
       .text(function(d){return d["name"]})
       .attr("font-size",12)
 
+/* Craeting a circle class to be used to scale up and down. */      
  circle =  svg.append("circle")
       .attr("class","circles")
       .attr("cx",60)
@@ -77,7 +82,8 @@ async function main(){
       .attr("r",4)
       .attr("fill","transparent")
       .attr("stroke","black")
-            
+
+/* Displaying all the years for each team.  */      
   years = svg.selectAll('text.years')
       .data(dataset)
       .enter()
@@ -102,7 +108,7 @@ async function main(){
             })
             
   
-
+/* select the options and navigateto the payroll. */            
   d3.selectAll("option")
       /*Click Functionality */
       .on("click", function(){ 
