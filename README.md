@@ -1,2 +1,2 @@
 # D3
-Midterm assignment
+Bouncing Data Visualization.
